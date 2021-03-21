@@ -8,21 +8,47 @@ import './index.css';
 // Cadastrar uma nova tarefa
 // Remover uma tarefa
 
+interface ITask {
+  id: number;
+  name: string,
+  duration: string,
+  deadline: string,
+}
+
 const App: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [duration, setDuration] = useState<string>('');
   const [deadline, setDeadline] = useState<string>('');
+  const [tasks, setTasks] = useState<Array<ITask>>([]);
+  let id: number = 0;
 
-  const printaDados = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  // const printaDados = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  //   e.preventDefault();
+  //   console.log(name);
+  //   console.log(duration);
+  //   console.log(deadline);
+  // };
+
+  const submitTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(name);
-    console.log(duration);
-    console.log(deadline);
+    const tasksArray = tasks;
+    const task: ITask = {
+      id,
+      name,
+      duration,
+      deadline,
+    };
+    id += 1;
+    tasksArray.push(task);
+    setTasks(tasksArray);
+    setName('');
+    setDuration('');
+    setDeadline('');
   };
 
   return (
     <div className="App">
-      <form>
+      <form onSubmit={(e) => submitTask(e)}>
         <label htmlFor="name">
           Digite o nome da tarefa:
           <input
@@ -54,7 +80,7 @@ const App: React.FC = () => {
             onChange={(e) => setDeadline(e.target.value)}
           />
         </label>
-        <button type="submit" onClick={(e) => printaDados(e)}>Cadastrar</button>
+        <button type="submit">Cadastrar</button>
       </form>
       <div className="taskscontainer">
         <div className="tasks">
@@ -63,16 +89,13 @@ const App: React.FC = () => {
             <p><strong>Duração:</strong></p>
             <p><strong>Prazo:</strong></p>
           </div>
-          <div className="task">
-            <p>Trabalho de PA</p>
-            <p>24h</p>
-            <p>22/03/2021-10:00:00</p>
-          </div>
-          <div className="task">
-            <p>Trabalho de PA</p>
-            <p>24h</p>
-            <p>22/03/2021-10:00:00</p>
-          </div>
+          {tasks.map((task) => (
+            <div key={task.id} className="task">
+              <p>{task.name}</p>
+              <p>{task.duration}</p>
+              <p>{task.deadline}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
