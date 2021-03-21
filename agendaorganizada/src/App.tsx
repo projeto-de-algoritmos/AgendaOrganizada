@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import ITask from './utils/itask';
 import './index.css';
+
 
 // Quais são os dados da agenda?
 // Tarefa: Nome, Duração, Prazo máximo (campo date)
@@ -8,12 +10,7 @@ import './index.css';
 // Cadastrar uma nova tarefa
 // Remover uma tarefa
 
-interface ITask {
-  id: number;
-  name: string,
-  duration: string,
-  deadline: string,
-}
+
 
 const App: React.FC = () => {
   const [name, setName] = useState<string>('');
