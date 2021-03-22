@@ -1,8 +1,9 @@
 interface ITask {
-    id: number;
     name: string,
-    duration: string,
+    duration: number,
     deadline: string,
+    deadlineHour: string,
+    transformedDeadline: string
 }
 
 export default ITask;
