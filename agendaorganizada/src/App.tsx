@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ITask from './utils/itask';
+import minimizeLateness from './utils/minimizeLateness';
+import transformDate from './utils/transformDate';
 import './index.css';
-
 
 // Quais são os dados da agenda?
 // Tarefa: Nome, Duração, Prazo máximo (campo date)
@@ -10,14 +11,12 @@ import './index.css';
 // Cadastrar uma nova tarefa
 // Remover uma tarefa
 
-
-
 const App: React.FC = () => {
   const [name, setName] = useState<string>('');
-  const [duration, setDuration] = useState<string>('');
+  const [duration, setDuration] = useState<number>(0);
   const [deadline, setDeadline] = useState<string>('');
+  const [deadlineHour, setDeadlineHour] = useState<string>('');
   const [tasks, setTasks] = useState<Array<ITask>>([]);
-  let id: number = 0;
 
   // const printaDados = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
   //   e.preventDefault();
@@ -30,16 +29,17 @@ const App: React.FC = () => {
     e.preventDefault();
     const tasksArray = tasks;
     const task: ITask = {
-      id,
       name,
       duration,
+      transformedDeadline: transformDate(deadline),
+      deadlineHour,
       deadline,
     };
-    id += 1;
     tasksArray.push(task);
+    minimizeLateness(tasksArray);
     setTasks(tasksArray);
     setName('');
-    setDuration('');
+    setDuration(0);
     setDeadline('');
   };
 
@@ -47,7 +47,7 @@ const App: React.FC = () => {
     <div className="App">
       <form onSubmit={(e) => submitTask(e)}>
         <label htmlFor="name">
-          Digite o nome da tarefa:
+          Nome da tarefa:
           <input
             type="text"
             name="name"
@@ -58,23 +58,33 @@ const App: React.FC = () => {
           />
         </label>
         <label htmlFor="duration">
-          Insira a duração da tarefa:
+          Duração da tarefa(em horas):
           <input
-            type="time"
+            type="number"
             name="duration"
             id="duration"
             value={duration}
-            onChange={(e) => setDuration(e.target.value)}
+            onChange={(e) => setDuration(Number(e.target.value))}
           />
         </label>
         <label htmlFor="deadline">
-          Insira o prazo da tarefa:
+          Prazo da tarefa:
           <input
             type="date"
             name="deadline"
             id="deadline"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
+          />
+        </label>
+        <label htmlFor="deadlineHour">
+          Horário de entrega:
+          <input
+            type="time"
+            name="deadline_hour"
+            id="deadline_hour"
+            value={deadlineHour}
+            onChange={(e) => setDeadlineHour(e.target.value)}
           />
         </label>
         <button type="submit">Cadastrar</button>
@@ -87,9 +97,12 @@ const App: React.FC = () => {
             <p><strong>Prazo:</strong></p>
           </div>
           {tasks.map((task) => (
-            <div key={task.id} className="task">
+            <div key={task.name} className="task">
               <p>{task.name}</p>
-              <p>{task.duration}</p>
+              <p>
+                {task.duration}
+                h
+              </p>
               <p>{task.deadline}</p>
             </div>
           ))}
