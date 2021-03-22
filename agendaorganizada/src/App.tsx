@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const deleteSchedule = () => {
     localStorage.removeItem('tasksArray');
     setTasks([]);
+    setLateness(0);
   };
 
   const submitTask = (e: React.FormEvent<HTMLFormElement>) => {
