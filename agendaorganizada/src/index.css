@@ -4,27 +4,69 @@
   box-sizing: border-box;
 }
 
+html, body {
+  background-color: #E6E4EE;
+}
+
 .App {
   width: 100vw;
   height: 100vh;
+  color: #090B10;
+  background-color: #E6E4EE;
+  font-family: sans-serif;
 
-  background-color: #bebebe;
+  display: flex;
+  flex-direction: column;
 }
 
 form {
   width: 100vw;
-  height: 80px;
-  background-color: #708090;
-  color: #eee;
+  min-height: 100px;
 
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+
+  border-bottom: 2px solid #6F7480;
 }
 
 form label {
   display: flex;
   flex-direction: column;
+}
+
+form input {
+  height: 40px;
+  width: 205px;
+  background-color: #F7F7FB;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  padding: 20px;
+  margin-top: 10px;
+  font-size: 1.2em;
+
+}
+
+.App form button {
+  width: 140px;
+  height: 40px;
+  border-radius:  50px;
+  outline: none;
+  font-size: 1.1em;
+  border: none;
+  background-color: #161A22;
+  color: #F7F7FB;
+}
+
+.App form button:hover {
+  cursor: pointer;
+  background-color: #090B10;
+}
+
+.App form button:active {
+  box-shadow: 5px 5px 15px 7px rgba(0,0,0,0.3);
 }
 
 .taskscontainer{
@@ -38,13 +80,19 @@ form label {
   align-items: center;
 }
 
-.tasks {
-  width: 350px;
-  height: 400px;
-  background-color: #ebecf0;
-  border-radius: 8px;
+.taskscontainer h1 {
+  margin: 8px;
+  font-size: 1.8em;
+}
 
-  color: #111;
+.tasks {
+  width: 600px;
+  height: 400px;
+  background-color: #F7F7FB;
+  border-radius: 8px;
+  box-shadow: 0px 13px 9px 4px rgba(0,0,0,0.12);
+
+  color: #090B10;
 
   display: flex;
   justify-content: flex-start;
@@ -53,6 +101,8 @@ form label {
 
   padding-top: 5px;
   padding-bottom: 5px;
+
+  
 }
 
 .task {
@@ -62,5 +112,24 @@ form label {
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #6F7480;
+}
+
+@media(max-width: 1008px){
+  form {
+    flex-direction: column;
+    min-height: auto;
+  }
+  form label {
+    margin: 10px;
+  }
+  form button {
+    margin-bottom: 10px;
+  }
+}
+
+@media(max-width: 365px){
+  .tasks {
+    width: 95vw;
+  }
 }

@@ -17,6 +17,7 @@ const App: React.FC = () => {
   const [deadline, setDeadline] = useState<string>('');
   const [deadlineHour, setDeadlineHour] = useState<string>('');
   const [tasks, setTasks] = useState<Array<ITask>>([]);
+  const [lateness, setLateness] = useState<number>(0);
 
   // const printaDados = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
   //   e.preventDefault();
@@ -36,7 +37,7 @@ const App: React.FC = () => {
       deadline,
     };
     tasksArray.push(task);
-    minimizeLateness(tasksArray);
+    setLateness(minimizeLateness(tasksArray));
     setTasks(tasksArray);
     setName('');
     setDuration(0);
@@ -90,6 +91,12 @@ const App: React.FC = () => {
         <button type="submit">Cadastrar</button>
       </form>
       <div className="taskscontainer">
+        <h1>
+          Atraso mínimo para essa agenda:
+          {' '}
+          {lateness}
+          h
+        </h1>
         <div className="tasks">
           <div className="task">
             <p><strong>Tarefa:</strong></p>
@@ -103,7 +110,7 @@ const App: React.FC = () => {
                 {task.duration}
                 h
               </p>
-              <p>{task.deadline}</p>
+              <p>{`${task.transformedDeadline} ${task.deadlineHour}`}</p>
             </div>
           ))}
         </div>
