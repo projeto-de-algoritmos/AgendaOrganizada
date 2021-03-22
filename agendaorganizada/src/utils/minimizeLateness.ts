@@ -17,7 +17,7 @@ const max = (a: number, b: number): number => {
   return b;
 };
 
-const minimizeLateness = (tasks: Array<ITask>): number => {
+const minimizeLateness = (tasks: Array<ITask>): string => {
   tasks.sort(compare);
   const currentDate = new Date();
   console.log(`Current date: ${currentDate}`);
@@ -41,7 +41,9 @@ const minimizeLateness = (tasks: Array<ITask>): number => {
     minLateness = max(minLateness, (task.duration + startTime) - taskDeadline);
     startTime += task.duration;
   });
-  return minLateness;
+  const hours = Math.floor(minLateness);
+  const minutes = Math.floor((minLateness * 60) % 60);
+  return `${hours}h ${minutes}min`;
 };
 
 export default minimizeLateness;
