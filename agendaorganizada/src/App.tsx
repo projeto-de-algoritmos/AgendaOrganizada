@@ -18,7 +18,7 @@ const App: React.FC = () => {
   const [deadline, setDeadline] = useState<string>('');
   const [deadlineHour, setDeadlineHour] = useState<string>('');
   const [tasks, setTasks] = useState<Array<ITask>>([]);
-  const [lateness, setLateness] = useState<number>(0);
+  const [lateness, setLateness] = useState<string>('0h0min');
 
   useEffect(() => {
     const tasksArray: ITask[] = JSON.parse(localStorage.getItem('tasksArray') || '[]');
@@ -29,7 +29,7 @@ const App: React.FC = () => {
   const deleteSchedule = () => {
     localStorage.removeItem('tasksArray');
     setTasks([]);
-    setLateness(0);
+    setLateness('0h0min');
   };
 
   const submitTask = (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,7 +110,6 @@ const App: React.FC = () => {
             Atraso mínimo:
             {' '}
             {lateness}
-            h
           </h1>
           <button onClick={deleteSchedule} type="button">Limpar agenda</button>
         </div>
