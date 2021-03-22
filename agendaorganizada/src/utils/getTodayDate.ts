@@ -9,6 +9,5 @@ export default function getTodayDate() {
   if (Number(mm) < 10) {
     mm = `0${mm}`;
   }
-  console.log(`${yyyy}-${mm}-${dd}`);
   return `${yyyy}-${mm}-${dd}`;
 }
